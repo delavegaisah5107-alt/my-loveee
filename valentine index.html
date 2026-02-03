@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentine Invitation</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Poppins', 'Segoe UI', sans-serif; }
+    body {
+      margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #ffd6e8, #fbeaff);
+      color: #5a2a4a; overflow: hidden;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 22px; padding: 28px 24px; max-width: 420px; width: 90%;
+      text-align: center; box-shadow: 0 25px 45px rgba(255, 182, 213, 0.4);
+      position: relative; z-index: 2;
+    }
+    h1 { font-size: 2rem; margin-bottom: 10px; }
+    p { font-size: 1.05rem; line-height: 1.6; }
+    .heart { font-size: 3rem; animation: beat 1.2s infinite; margin: 10px 0 18px; color: #ff5fa2; }
+    @keyframes beat { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
+    .page { display: none; }
+    .page.active { display: block; }
+    .btns { margin-top: 18px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    button {
+      background: #ff7bbf; border: none; border-radius: 30px; padding: 12px 22px;
+      color: #fff; font-size: 1rem; cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 10px 20px rgba(255, 123, 191, .4);
+    }
+    button.secondary { background: #ffd1e8; color: #b1447a; }
+    button:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(255, 123, 191, .5); }
+    .details { background: #ffe3f1; border-radius: 14px; padding: 14px; margin-top: 14px; }
+    .details p { margin: 6px 0; font-size: .95rem; }
+
+    /* Floating blue hearts */
+    .floating-heart {
+      position: absolute; bottom: -50px; font-size: 22px; color: #6bb6ff;
+      animation: floatUp linear infinite; opacity: 0.7; z-index: 1;
+    }
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 0.8; }
+      to { transform: translateY(-110vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background music (local file) -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="Someday-The-Ridleys.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="card">
+    <!-- 1. Greetings -->
+    <div class="page active" id="p1">
+      <h1>Hello my loveee!</h1>
+      <div class="heart">❤</div>
+      <p>I've been wanting to share something special with you.</p>
+      <div class="btns">
+        <button onclick="go(2)">Next</button>
+      </div>
+    </div>
+
+    <!-- 2. Intro -->
+    <div class="page" id="p2">
+      <h1>Just a little note</h1>
+      <p>I just want to tell you something...</p>
+      <div class="btns">
+        <button class="secondary" onclick="go(1)">Back</button>
+        <button onclick="go(3)">Next</button>
+      </div>
+    </div>
+
+    <!-- 3. Confession page -->
+    <div class="page" id="p3">
+      <h1>Confession</h1>
+      <p>I don't know where I am going to start but here it goes. Ayah/love I just want to say I like you and I dore so much, I know it may sounds cringy but that's the truth. I know naman na halata mo na din and humahanap lang talaga ako ng right timing para sabihin sa'yo in a most formal way kse hindi naman talaga joke time yung nararamdaman ko sa'yo or hindi sya trip lang hehehehe. I just want you to know that like you just the way you are kahit na lagi kang naiinis or napipikon sa akin HAHAHAHAHAHA and it made fall in love more na nasasabayan mo mang trip ko without even getting mad or hindi mo ako sinasabihan ng ang kulit-kulot ko na and in fact ikaw pa ang nagsasabi na okay lang. Love, I dont to rush things kase alam ko na pareho pa tayo na maraming responsibilities and alam ko na wala pa din sa isip mo agad pero gusto ko lang malaman mo yung totoo without any denial and para hindi ka rin mailang if ever man na malaman mo hehehe. Love, don't worry kase whatever decision is I will brespect it. Always remember that I will be here for you whenever you need me, maliit or malaking bagay man yan. Remember as well that I always got your back and I'm here to support you and cheer you up.</p>
+      <div class="btns">
+        <button class="secondary" onclick="go(2)">Back</button>
+        <button onclick="go(4)">Next</button>
+      </div>
+    </div>
+
+    <!-- 4. Message page -->
+    <div class="page" id="p4">
+      <h1>A Message for You</h1>
+      <p>Will you be my Valentine's Date?</p>
+      <div class="details">
+        <p><strong>📅 Date:</strong> February 13</p>
+        <p><strong>⏰ Time:</strong> After your class</p>
+        <p><strong>📍 Place:</strong> Anywhere you want</p>
+      </div>
+      <div class="btns">
+        <button class="secondary" onclick="go(3)">Back</button>
+        <button onclick="go(5)">Next</button>
+      </div>
+    </div>
+
+    <!-- 5. Yes or No -->
+    <div class="page" id="p5">
+      <h1>Will you go with me?</h1>
+      <p>Would you like to be my Valentine?</p>
+      <div class="btns">
+        <button onclick="answer('yes')">Yes 💕</button>
+        <button class="secondary" onclick="answer('no')">No</button>
+      </div>
+    </div>
+
+    <!-- 6. Thank you -->
+    <div class="page" id="p6">
+      <h1>Thank You</h1>
+      <div class="heart">💖</div>
+      <p id="thanksText">Thank you for love and I can't wait too celebrate and create memories with you.</p>
+    </div>
+  </div>
+
+  <script>
+    const music = document.getElementById('bgMusic');
+    let musicStarted = false;
+    let heartTimer = null;
+
+    function go(n) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('p' + n).classList.add('active');
+
+      // 🎶 Start music ONLY on Confession page (p3)
+      if (n === 3 && !musicStarted) {
+        startMusicFadeIn();
+        startBeatHearts();
+        musicStarted = true;
+      }
+    }
+
+    function answer(val) {
+      go(6);
+      const t = document.getElementById('thanksText');
+      t.textContent = val === 'yes'
+        ? "Yayayayay! Thank you for saying yes loveee."
+        : "Thank you for being honest and I appreciate you so much.";
+    }
+
+    // 💌 Music fade-in
+    function startMusicFadeIn() {
+      music.volume = 0;
+      music.play().catch(()=>{});
+      let v = 0;
+      const fade = setInterval(() => {
+        v += 0.02;
+        if (v >= 0.6) { v = 0.6; clearInterval(fade); }
+        music.volume = v;
+      }, 150);
+    }
+
+    // 💙 Floating hearts synced to beat (approx. 80 BPM)
+    function startBeatHearts() {
+      const beatInterval = 750; // ~80 BPM
+      heartTimer = setInterval(createHeart, beatInterval);
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.textContent = '💙';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = 5 + Math.random() * 3 + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 9000);
+    }
+
+    // Browser interaction unlock
+    document.addEventListener('click', () => {}, { once: true });
+  </script>
+</body>
+</html>
